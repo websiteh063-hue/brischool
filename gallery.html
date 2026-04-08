@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery | B.R. International School</title>
+  <meta name="description" content="Browse photos and event moments from B.R. International School, including school functions, activities, and campus life in Lucknow.">
+  <meta name="theme-color" content="#0f3557">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="gallery-page">
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <img src="assets/images/site/logo1.gif" alt="B.R. International School logo" class="loader-logo" width="88" height="88">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <a class="skip-link" href="#gallery-main">Skip to content</a>
+
+  <header class="site-header compact-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="B.R. International School home">
+          <img src="assets/images/site/logo1.gif" alt="B.R. International School logo" width="56" height="56">
+          <span>
+            <strong>B.R. International School</strong>
+            <small>Campus gallery</small>
+          </span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu" id="site-menu">
+          <a href="index.html#about">About</a>
+          <a href="index.html#programs">Programs</a>
+          <a href="index.html#contact">Contact</a>
+          <a class="button button-primary" href="index.html">Back to Home</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="gallery-main">
+    <section class="section gallery-hero" data-aos="fade-up">
+      <div class="container gallery-hero-inner">
+        <div>
+          <p class="eyebrow">Gallery</p>
+          <h1>School life, celebrations, and everyday learning in one place.</h1>
+          <p>Every photo below is preserved from the original project and presented in a cleaner, faster, mobile-friendly gallery.</p>
+        </div>
+        <div class="gallery-summary">
+          <div>
+            <strong id="gallery-count">0</strong>
+            <span>Photos</span>
+          </div>
+          <div>
+            <strong>1</strong>
+            <span>Event video</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section surface" data-aos="fade-up">
+      <div class="container">
+        <div class="gallery-toolbar">
+          <p>Click any image to open it in the lightbox. Images are lazy-loaded for better performance.</p>
+          <a class="button button-secondary" href="assets/images/gallery/1334.mp4">Download event video</a>
+        </div>
+
+        <div class="video-panel gallery-video" data-aos="zoom-in">
+          <div>
+            <p class="eyebrow">Featured video</p>
+            <h2>School event highlight</h2>
+          </div>
+          <video controls preload="metadata" playsinline>
+            <source src="assets/images/gallery/1334.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal lightbox" id="galleryModal" hidden>
+    <button class="close-btn lightbox-close" type="button" aria-label="Close image viewer">&times;</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">&#8249;</button>
+    <figure class="lightbox-figure">
+      <img id="lightbox-image" src="" alt="">
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">&#8250;</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>&copy; <span id="current-year">2026</span> B.R. International School. All rights reserved.</p>
+      <a href="index.html">Return home</a>
+    </div>
+  </footer>
+
+  <button class="back-to-top" type="button" aria-label="Back to top">&#8593;</button>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
