@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://websiteh063-hue.github.io/brischool/sitemap.xml
+Sitemap: https://brischool.in/sitemap.xml
