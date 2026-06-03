@@ -14,6 +14,10 @@ const lightboxCaption = document.querySelector("#lightbox-caption");
 const numberedRange = (start, end, extension) =>
   Array.from({ length: end - start + 1 }, (_, index) => `${start + index}.${extension}`);
 
+const hiddenGalleryFiles = new Set([
+  "8.jpg"
+]);
+
 const galleryMedia = [
   ...numberedRange(1, 51, "jpg"),
   ...numberedRange(53, 116, "jpg"),
@@ -21,7 +25,9 @@ const galleryMedia = [
   ...numberedRange(1330, 1333, "jpeg"),
   ...numberedRange(3333, 3339, "jpeg"),
   ...numberedRange(33310, 33318, "jpeg")
-].map((fileName, index) => ({
+]
+  .filter((fileName) => !hiddenGalleryFiles.has(fileName))
+  .map((fileName, index) => ({
   thumb: `assets/images/gallery/thumbs/${fileName}`,
   src: `assets/images/gallery/${fileName}`,
   alt: `B.R. International School gallery image ${index + 1}`
