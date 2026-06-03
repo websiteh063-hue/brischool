@@ -216,6 +216,19 @@ p {
   font-size: 1.03rem;
 }
 
+.inline-link {
+  color: var(--navy-800);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+.inline-link:hover,
+.inline-link:focus-visible {
+  color: var(--gold-500);
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -484,6 +497,11 @@ p {
   animation: fadeUp 1.25s ease both;
 }
 
+.hero-supporting-link {
+  margin-top: 1rem;
+  max-width: 40rem;
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -693,6 +711,16 @@ blockquote cite {
   border-top: 1px solid rgba(15, 53, 87, 0.1);
 }
 
+.section-link-note {
+  margin-top: 1rem;
+}
+
+.center-note {
+  max-width: 48rem;
+  margin: 1.35rem auto 0;
+  text-align: center;
+}
+
 .card-grid,
 .showcase-grid,
 .gallery-grid {
@@ -745,6 +773,30 @@ blockquote cite {
   height: 100%;
   min-height: 320px;
   object-fit: cover;
+}
+
+.team-card-text {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(180deg, rgba(15, 53, 87, 0.96), rgba(36, 93, 135, 0.92));
+}
+
+.team-card-body {
+  display: grid;
+  align-content: end;
+  gap: 0.9rem;
+  padding: 1.5rem;
+}
+
+.team-card-body .team-name,
+.team-card-body p,
+.team-card-text .inline-link {
+  color: var(--white);
+}
+
+.team-card-text .inline-link:hover,
+.team-card-text .inline-link:focus-visible {
+  color: var(--sand-100);
 }
 
 .team-overlay {
