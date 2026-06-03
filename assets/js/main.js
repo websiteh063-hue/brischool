@@ -25,22 +25,48 @@ const hiddenGalleryFiles = new Set([
   "50.jpg"
 ]);
 
-const galleryAlbumName = "Old Memories";
-
-const galleryMedia = [
+const oldMemoriesFiles = [
   ...numberedRange(1, 51, "jpg"),
   ...numberedRange(53, 116, "jpg"),
   ...numberedRange(1223, 1229, "jpeg"),
   ...numberedRange(1330, 1333, "jpeg"),
   ...numberedRange(3333, 3339, "jpeg"),
   ...numberedRange(33310, 33318, "jpeg")
-]
-  .filter((fileName) => !hiddenGalleryFiles.has(fileName))
-  .map((fileName, index) => ({
-  thumb: `assets/images/gallery/thumbs/${fileName}`,
-  src: `assets/images/gallery/${fileName}`,
-  alt: `${galleryAlbumName} photo ${index + 1} at B.R. International School`
-}));
+].filter((fileName) => !hiddenGalleryFiles.has(fileName));
+
+const galleryAlbums = [
+  {
+    name: "Class 10 Result",
+    slug: "class-10-result",
+    cover: "assets/images/gallery/class-10-result/class-10-result-1.jpeg",
+    description: "A proud celebration of our Class 10 students, their hard work, discipline, and result-day achievements.",
+    files: [
+      "class-10-result-1.jpeg",
+      "class-10-result-2.jpeg",
+      "class-10-result-3.jpeg"
+    ],
+    basePath: "assets/images/gallery/class-10-result",
+    thumbPath: "assets/images/gallery/thumbs/class-10-result"
+  },
+  {
+    name: "Old Memories",
+    slug: "old-memories",
+    cover: "assets/images/gallery/3333.jpeg",
+    description: "A curated collection of school events, activities, celebrations, classroom moments, and campus memories.",
+    files: oldMemoriesFiles,
+    basePath: "assets/images/gallery",
+    thumbPath: "assets/images/gallery/thumbs"
+  }
+];
+
+const galleryMedia = galleryAlbums.flatMap((album) =>
+  album.files.map((fileName, index) => ({
+    thumb: `${album.thumbPath}/${fileName}`,
+    src: `${album.basePath}/${fileName}`,
+    alt: `${album.name} photo ${index + 1} at B.R. International School`,
+    album: album.name
+  }))
+);
 
 let activeGalleryIndex = 0;
 
@@ -128,17 +154,54 @@ const buildGalleryCard = (item, index) => {
   button.innerHTML = `
     <figure>
       <img src="${item.thumb}" alt="${item.alt}" loading="lazy" decoding="async">
-      <figcaption>${item.alt}</figcaption>
+      <figcaption><span>${item.album}</span>${item.alt}</figcaption>
     </figure>
   `;
   button.addEventListener("click", () => openLightbox(index));
   return button;
 };
 
+const buildAlbumSection = (album) => {
+  const section = document.createElement("section");
+  section.className = "gallery-album-section";
+  section.id = album.slug;
+  section.setAttribute("data-aos", "fade-up");
+
+  const cards = album.files
+    .map((fileName) => galleryMedia.findIndex((item) => item.src === `${album.basePath}/${fileName}`))
+    .filter((index) => index >= 0)
+    .map((index) => buildGalleryCard(galleryMedia[index], index));
+
+  const grid = document.createElement("div");
+  grid.className = "album-photo-grid";
+  cards.forEach((card) => grid.appendChild(card));
+
+  section.innerHTML = `
+    <div class="album-panel compact-album-panel">
+      <figure class="album-cover">
+        <img src="${album.cover}" alt="${album.name} album cover from B.R. International School" loading="lazy" decoding="async">
+      </figure>
+      <div class="album-copy">
+        <p class="eyebrow">Album</p>
+        <h2>${album.name}</h2>
+        <p>${album.description}</p>
+        <div class="album-meta">
+          <strong>${album.files.length}</strong>
+          <span>photos</span>
+        </div>
+      </div>
+    </div>
+  `;
+  section.appendChild(grid);
+  return section;
+};
+
 const renderGallery = () => {
   if (!galleryGrid) return;
   const fragment = document.createDocumentFragment();
-  galleryMedia.forEach((item, index) => fragment.appendChild(buildGalleryCard(item, index)));
+  galleryAlbums.forEach((album) => {
+    fragment.appendChild(buildAlbumSection(album));
+  });
   galleryGrid.appendChild(fragment);
   if (galleryCount) galleryCount.textContent = String(galleryMedia.length);
 };

@@ -1193,6 +1193,10 @@ blockquote cite {
   box-shadow: var(--shadow-md);
 }
 
+.compact-album-panel {
+  margin-bottom: 1.25rem;
+}
+
 .album-cover {
   overflow: hidden;
   min-height: 18rem;
@@ -1220,8 +1224,40 @@ blockquote cite {
   margin-top: 0.4rem;
 }
 
+.album-meta {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  justify-content: start;
+  gap: 0.45rem;
+  color: var(--ink-600);
+}
+
+.album-meta strong {
+  color: var(--navy-900);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.album-list {
+  display: block;
+}
+
+.gallery-album-section {
+  padding: 1rem 0 3rem;
+}
+
+.gallery-album-section + .gallery-album-section {
+  border-top: 1px solid rgba(15, 53, 87, 0.12);
+  margin-top: 1rem;
+  padding-top: 3rem;
+}
+
 .album-photo-grid {
   padding-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.4rem;
 }
 
 .gallery-grid {
@@ -1256,8 +1292,7 @@ blockquote cite {
   font-size: 0.95rem;
 }
 
-.gallery-card figcaption::before {
-  content: "Old Memories";
+.gallery-card figcaption span {
   display: block;
   margin-bottom: 0.25rem;
   color: var(--navy-800);
