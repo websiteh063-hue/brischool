@@ -36,6 +36,21 @@ const oldMemoriesFiles = [
 
 const galleryAlbums = [
   {
+    name: "Republic Day 2026",
+    slug: "republic-day-2026",
+    cover: "assets/images/gallery/republic-day-2026/republic-day-2026-1.jpeg",
+    description: "A patriotic Republic Day celebration album with students, staff, and proud school moments.",
+    files: [
+      "republic-day-2026-1.jpeg",
+      "republic-day-2026-2.jpeg",
+      "republic-day-2026-3.jpeg",
+      "republic-day-2026-4.jpeg"
+    ],
+    mediaType: "image",
+    basePath: "assets/images/gallery/republic-day-2026",
+    thumbPath: "assets/images/gallery/thumbs/republic-day-2026"
+  },
+  {
     name: "Earth Day Celebration",
     slug: "earth-day-celebration",
     cover: "assets/images/gallery/earth-day-celebration/earth-day-cover.jpeg",
