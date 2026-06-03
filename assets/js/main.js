@@ -42,9 +42,9 @@ const galleryAlbums = [
     description: "Students learning, performing, and celebrating care for nature through Earth Day activities at school.",
     mediaType: "video",
     files: [
-      "earth-day-celebration-1.mp4",
-      "earth-day-celebration-2.mp4",
-      "earth-day-celebration-3.mp4"
+      "earth-day-celebration-new-1.mp4",
+      "earth-day-celebration-new-2.mp4",
+      "earth-day-celebration-new-3.mp4"
     ],
     basePath: "assets/images/gallery/earth-day-celebration"
   },
