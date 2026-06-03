@@ -619,10 +619,16 @@ p {
 }
 
 .hero-photo-main {
-  width: min(100%, 32rem);
-  height: 38rem;
+  width: min(100%, 40rem);
+  height: auto;
+  aspect-ratio: 1.22 / 1;
   margin-left: auto;
   background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-photo-main img {
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.84);
 }
 
 .hero-photo-accent {
@@ -1673,7 +1679,7 @@ blockquote cite {
 
   .hero-photo-main {
     width: 100%;
-    height: min(78vw, 34rem);
+    height: auto;
   }
 
   .hero-photo-accent,
@@ -1875,7 +1881,7 @@ blockquote cite {
   }
 
   .hero-photo-main {
-    height: min(90vw, 29rem);
+    height: auto;
   }
 
   .hero-photo-accent {
