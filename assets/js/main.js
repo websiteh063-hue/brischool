@@ -177,19 +177,13 @@ const buildAlbumSection = (album) => {
   cards.forEach((card) => grid.appendChild(card));
 
   section.innerHTML = `
-    <div class="album-panel compact-album-panel">
-      <figure class="album-cover">
-        <img src="${album.cover}" alt="${album.name} album cover from B.R. International School" loading="lazy" decoding="async">
-      </figure>
-      <div class="album-copy">
+    <div class="album-section-heading">
+      <div>
         <p class="eyebrow">Album</p>
         <h2>${album.name}</h2>
         <p>${album.description}</p>
-        <div class="album-meta">
-          <strong>${album.files.length}</strong>
-          <span>photos</span>
-        </div>
       </div>
+      <span>${album.files.length} photos</span>
     </div>
   `;
   section.appendChild(grid);
