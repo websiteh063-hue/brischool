@@ -1308,6 +1308,22 @@ blockquote cite {
   aspect-ratio: 1 / 1;
 }
 
+.gallery-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--navy-900);
+  object-fit: cover;
+}
+
+.video-gallery-card {
+  cursor: default;
+}
+
+.video-gallery-card:hover {
+  transform: translateY(-6px);
+}
+
 .gallery-card figcaption {
   padding: 0.9rem 1rem 1rem;
   color: var(--ink-700);

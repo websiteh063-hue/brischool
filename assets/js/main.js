@@ -36,6 +36,18 @@ const oldMemoriesFiles = [
 
 const galleryAlbums = [
   {
+    name: "Earth Day Celebration",
+    slug: "earth-day-celebration",
+    description: "Students learning, performing, and celebrating care for nature through Earth Day activities at school.",
+    mediaType: "video",
+    files: [
+      "earth-day-celebration-1.mp4",
+      "earth-day-celebration-2.mp4",
+      "earth-day-celebration-3.mp4"
+    ],
+    basePath: "assets/images/gallery/earth-day-celebration"
+  },
+  {
     name: "Class 10 Result",
     slug: "class-10-result",
     cover: "assets/images/gallery/class-10-result/class-10-result-1.jpeg",
@@ -45,6 +57,7 @@ const galleryAlbums = [
       "class-10-result-2.jpeg",
       "class-10-result-3.jpeg"
     ],
+    mediaType: "image",
     basePath: "assets/images/gallery/class-10-result",
     thumbPath: "assets/images/gallery/thumbs/class-10-result"
   },
@@ -54,6 +67,7 @@ const galleryAlbums = [
     cover: "assets/images/gallery/3333.jpeg",
     description: "A curated collection of school events, activities, celebrations, classroom moments, and campus memories.",
     files: oldMemoriesFiles,
+    mediaType: "image",
     basePath: "assets/images/gallery",
     thumbPath: "assets/images/gallery/thumbs"
   }
@@ -61,12 +75,14 @@ const galleryAlbums = [
 
 const galleryMedia = galleryAlbums.flatMap((album) =>
   album.files.map((fileName, index) => ({
-    thumb: `${album.thumbPath}/${fileName}`,
+    thumb: album.thumbPath ? `${album.thumbPath}/${fileName}` : "",
     src: `${album.basePath}/${fileName}`,
-    alt: `${album.name} photo ${index + 1} at B.R. International School`,
-    album: album.name
+    alt: `${album.name} ${album.mediaType === "video" ? "video" : "photo"} ${index + 1} at B.R. International School`,
+    album: album.name,
+    type: album.mediaType || "image"
   }))
 );
+const lightboxMedia = galleryMedia.filter((item) => item.type === "image");
 
 let activeGalleryIndex = 0;
 
@@ -146,6 +162,10 @@ document
   });
 
 const buildGalleryCard = (item, index) => {
+  if (item.type === "video") {
+    return buildVideoCard(item, index);
+  }
+
   const button = document.createElement("button");
   button.type = "button";
   button.className = "gallery-card";
@@ -157,8 +177,24 @@ const buildGalleryCard = (item, index) => {
       <figcaption><span>${item.album}</span>${item.alt}</figcaption>
     </figure>
   `;
-  button.addEventListener("click", () => openLightbox(index));
+  button.addEventListener("click", () => openLightbox(item));
   return button;
+};
+
+const buildVideoCard = (item, index) => {
+  const article = document.createElement("article");
+  article.className = "gallery-card video-gallery-card";
+  article.setAttribute("data-aos", index % 4 === 0 ? "zoom-in" : "fade-up");
+  article.innerHTML = `
+    <figure>
+      <video controls preload="metadata" playsinline>
+        <source src="${item.src}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <figcaption><span>${item.album}</span>${item.alt}</figcaption>
+    </figure>
+  `;
+  return article;
 };
 
 const buildAlbumSection = (album) => {
@@ -183,7 +219,7 @@ const buildAlbumSection = (album) => {
         <h2>${album.name}</h2>
         <p>${album.description}</p>
       </div>
-      <span>${album.files.length} photos</span>
+      <span>${album.files.length} ${album.mediaType === "video" ? "videos" : "photos"}</span>
     </div>
   `;
   section.appendChild(grid);
@@ -202,15 +238,16 @@ const renderGallery = () => {
 
 const updateLightbox = () => {
   if (!lightbox || !lightboxImage || !lightboxCaption) return;
-  const item = galleryMedia[activeGalleryIndex];
+  const item = lightboxMedia[activeGalleryIndex];
   lightboxImage.src = item.src;
   lightboxImage.alt = item.alt;
   lightboxCaption.textContent = item.alt;
 };
 
-const openLightbox = (index) => {
+const openLightbox = (item) => {
   if (!lightbox) return;
-  activeGalleryIndex = index;
+  activeGalleryIndex = lightboxMedia.findIndex((mediaItem) => mediaItem.src === item.src);
+  if (activeGalleryIndex < 0) return;
   updateLightbox();
   lightbox.hidden = false;
   lightbox.style.display = "flex";
@@ -225,7 +262,7 @@ function closeModal() {
 }
 
 const stepLightbox = (direction) => {
-  activeGalleryIndex = (activeGalleryIndex + direction + galleryMedia.length) % galleryMedia.length;
+  activeGalleryIndex = (activeGalleryIndex + direction + lightboxMedia.length) % lightboxMedia.length;
   updateLightbox();
 };
 
