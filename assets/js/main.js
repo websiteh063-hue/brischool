@@ -38,6 +38,7 @@ const galleryAlbums = [
   {
     name: "Earth Day Celebration",
     slug: "earth-day-celebration",
+    cover: "assets/images/gallery/earth-day-celebration/earth-day-cover.jpeg",
     description: "Students learning, performing, and celebrating care for nature through Earth Day activities at school.",
     mediaType: "video",
     files: [
@@ -85,6 +86,7 @@ const galleryMedia = galleryAlbums.flatMap((album) =>
 const lightboxMedia = galleryMedia.filter((item) => item.type === "image");
 
 let activeGalleryIndex = 0;
+let activeAlbumSlug = "";
 
 const setMenuState = (isOpen) => {
   if (!navToggle || !navMenu) return;
@@ -197,16 +199,41 @@ const buildVideoCard = (item, index) => {
   return article;
 };
 
-const buildAlbumSection = (album) => {
-  const section = document.createElement("section");
-  section.className = "gallery-album-section";
-  section.id = album.slug;
-  section.setAttribute("data-aos", "fade-up");
-
-  const cards = album.files
+const getAlbumItems = (album) =>
+  album.files
     .map((fileName) => galleryMedia.findIndex((item) => item.src === `${album.basePath}/${fileName}`))
     .filter((index) => index >= 0)
-    .map((index) => buildGalleryCard(galleryMedia[index], index));
+    .map((index) => ({ item: galleryMedia[index], index }));
+
+const buildAlbumCard = (album, index) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "album-card";
+  button.setAttribute("data-aos", index % 3 === 0 ? "zoom-in" : "fade-up");
+  button.setAttribute("aria-label", `Open ${album.name} album`);
+  button.innerHTML = `
+    <figure>
+      <div class="album-card-media">
+        <img src="${album.cover}" alt="${album.name} album cover" loading="lazy" decoding="async">
+        <span class="album-card-arrow" aria-hidden="true">&#8594;</span>
+      </div>
+      <figcaption>
+        <span>${album.files.length} ${album.mediaType === "video" ? "videos" : "photos"}</span>
+        <strong>${album.name}</strong>
+      </figcaption>
+    </figure>
+  `;
+  button.addEventListener("click", () => showAlbum(album.slug, true));
+  return button;
+};
+
+const buildAlbumSection = (album) => {
+  const section = document.createElement("section");
+  section.className = "gallery-album-detail";
+  section.id = `${album.slug}-album`;
+  section.setAttribute("data-aos", "fade-up");
+
+  const cards = getAlbumItems(album).map(({ item, index }) => buildGalleryCard(item, index));
 
   const grid = document.createElement("div");
   grid.className = "album-photo-grid";
@@ -219,22 +246,53 @@ const buildAlbumSection = (album) => {
         <h2>${album.name}</h2>
         <p>${album.description}</p>
       </div>
-      <span>${album.files.length} ${album.mediaType === "video" ? "videos" : "photos"}</span>
+      <div class="album-heading-actions">
+        <span>${album.files.length} ${album.mediaType === "video" ? "videos" : "photos"}</span>
+        <button class="button button-secondary album-back" type="button">Back to Albums</button>
+      </div>
     </div>
   `;
+  section.querySelector(".album-back")?.addEventListener("click", showAlbumOverview);
   section.appendChild(grid);
   return section;
 };
 
+const showAlbumOverview = () => {
+  activeAlbumSlug = "";
+  if (!galleryGrid) return;
+  galleryGrid.classList.remove("is-detail-view");
+  galleryGrid.innerHTML = "";
+  galleryAlbums.forEach((album, index) => {
+    galleryGrid.appendChild(buildAlbumCard(album, index));
+  });
+  if (window.location.hash) {
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+  }
+};
+
+const showAlbum = (slug, updateHash = false) => {
+  const album = galleryAlbums.find((albumItem) => albumItem.slug === slug);
+  if (!galleryGrid || !album) return;
+  activeAlbumSlug = slug;
+  galleryGrid.classList.add("is-detail-view");
+  galleryGrid.innerHTML = "";
+  galleryGrid.appendChild(buildAlbumSection(album));
+  if (updateHash) history.pushState(null, "", `#${slug}`);
+  galleryGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
 const renderGallery = () => {
   if (!galleryGrid) return;
-  const fragment = document.createDocumentFragment();
-  galleryAlbums.forEach((album) => {
-    fragment.appendChild(buildAlbumSection(album));
-  });
-  galleryGrid.appendChild(fragment);
-  if (galleryCount) galleryCount.textContent = String(galleryMedia.length);
+  const requestedAlbum = window.location.hash.replace("#", "");
+  if (galleryAlbums.some((album) => album.slug === requestedAlbum)) {
+    showAlbum(requestedAlbum);
+  } else {
+    showAlbumOverview();
+  }
+  if (galleryCount) galleryCount.textContent = String(galleryAlbums.length);
 };
+
+window.addEventListener("hashchange", renderGallery);
 
 const updateLightbox = () => {
   if (!lightbox || !lightboxImage || !lightboxCaption) return;
