@@ -410,7 +410,6 @@ p {
 .hero-grid,
 .split-layout,
 .contact-grid,
-.leadership-layout,
 .gallery-hero-inner,
 .footer-grid {
   display: grid;
@@ -541,7 +540,6 @@ p {
 
 .hero-photo img,
 .showcase-item img,
-.team-card img,
 .gallery-card img {
   width: 100%;
   height: 100%;
@@ -551,7 +549,6 @@ p {
 
 .hero-photo:hover img,
 .showcase-item:hover img,
-.team-card:hover img,
 .gallery-card:hover img {
   transform: scale(1.05);
 }
@@ -643,7 +640,7 @@ p {
 .info-card p,
 .facility-card p,
 .trust-card p,
-.leadership-copy p,
+.leadership-message-copy p,
 .contact-copy p {
   max-width: 62ch;
 }
@@ -733,107 +730,81 @@ blockquote cite {
 }
 
 .leadership-section {
-  padding: 80px 20px;
+  padding: 6rem 0;
   background:
     linear-gradient(135deg, rgba(15, 53, 87, 0.04), rgba(61, 115, 158, 0.08), rgba(255, 255, 255, 0.98));
 }
 
-.leadership-layout {
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
-  align-items: start;
-  gap: 3rem;
+.leadership-heading {
+  margin-bottom: 2.4rem;
 }
 
-.leadership-copy {
-  position: sticky;
-  top: 8.5rem;
+.leadership-message-list {
   display: grid;
-  gap: 1rem;
-  max-width: 34rem;
+  gap: 1.6rem;
 }
 
-.leadership-grid {
+.leadership-message {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.team-card {
-  position: relative;
-  min-height: 320px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--white);
+  grid-template-columns: minmax(18rem, 0.42fr) minmax(0, 0.58fr);
+  align-items: stretch;
+  gap: 2rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(15, 53, 87, 0.08);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.96);
   box-shadow: var(--shadow-md);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.team-card img {
+.leadership-message:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.leadership-message-reverse {
+  grid-template-columns: minmax(0, 0.58fr) minmax(18rem, 0.42fr);
+}
+
+.leadership-message-reverse .leadership-portrait {
+  grid-column: 2;
+}
+
+.leadership-message-reverse .leadership-message-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.leadership-portrait {
+  overflow: hidden;
+  min-height: 24rem;
+  border-radius: calc(var(--radius-lg) - 8px);
+  background: rgba(15, 53, 87, 0.08);
+}
+
+.leadership-portrait img {
   width: 100%;
   height: 100%;
-  min-height: 320px;
   object-fit: cover;
+  transition: transform 0.45s ease;
 }
 
-.team-card-text {
-  display: flex;
-  align-items: stretch;
-  background: linear-gradient(180deg, rgba(15, 53, 87, 0.96), rgba(36, 93, 135, 0.92));
+.leadership-message:hover .leadership-portrait img {
+  transform: scale(1.04);
 }
 
-.team-card-body {
+.leadership-message-copy {
   display: grid;
-  align-content: end;
-  gap: 0.9rem;
-  padding: 1.5rem;
+  align-content: center;
+  gap: 0.85rem;
+  padding: clamp(1.2rem, 3vw, 2.4rem);
 }
 
-.team-card-body .team-name,
-.team-card-body p,
-.team-card-text .inline-link {
-  color: var(--white);
-}
-
-.team-card-text .inline-link:hover,
-.team-card-text .inline-link:focus-visible {
-  color: var(--sand-100);
-}
-
-.team-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 15px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  transform: translateY(100%);
-  transition: 0.3s ease;
-}
-
-.team-overlay h3,
-.team-overlay .team-name,
-.team-overlay p {
-  color: #fff;
-}
-
-.team-overlay h3,
-.team-overlay .team-name {
-  font-size: 1.25rem;
-}
-
-.team-overlay p {
-  margin-top: 0.2rem;
-  font-size: 0.95rem;
-}
-
-.team-card:hover .team-overlay {
-  transform: translateY(0);
-}
-
-.team-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+.leader-role {
+  color: var(--gold-500);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .facilities-grid {
@@ -1261,7 +1232,6 @@ blockquote cite {
   .hero-grid,
   .split-layout,
   .contact-grid,
-  .leadership-layout,
   .gallery-hero-inner,
   .footer-grid,
   .video-panel,
@@ -1289,14 +1259,19 @@ blockquote cite {
     margin-top: 1rem;
   }
 
-  .showcase-grid,
-  .leadership-grid {
+  .showcase-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .leadership-copy {
-    position: static;
-    max-width: none;
+  .leadership-message,
+  .leadership-message-reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .leadership-message-reverse .leadership-portrait,
+  .leadership-message-reverse .leadership-message-copy {
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 
@@ -1348,8 +1323,7 @@ blockquote cite {
 
   .hero-stats,
   .showcase-grid,
-  .gallery-summary,
-  .leadership-grid {
+  .gallery-summary {
     grid-template-columns: 1fr;
   }
 
@@ -1378,9 +1352,8 @@ blockquote cite {
     grid-row: auto;
   }
 
-  .team-card,
-  .team-card img {
-    min-height: 280px;
+  .leadership-portrait {
+    min-height: 20rem;
   }
 
   .lightbox {
