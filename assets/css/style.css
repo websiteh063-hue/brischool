@@ -1180,6 +1180,50 @@ blockquote cite {
   margin-bottom: 2rem;
 }
 
+.album-panel {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.42fr) minmax(0, 0.58fr);
+  gap: 1.5rem;
+  align-items: stretch;
+  margin-bottom: 2rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(15, 53, 87, 0.08);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-md);
+}
+
+.album-cover {
+  overflow: hidden;
+  min-height: 18rem;
+  border-radius: calc(var(--radius-lg) - 8px);
+  background: rgba(15, 53, 87, 0.08);
+}
+
+.album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-copy {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.album-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.album-photo-grid {
+  padding-top: 0.5rem;
+}
+
 .gallery-grid {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }
@@ -1210,6 +1254,17 @@ blockquote cite {
   padding: 0.9rem 1rem 1rem;
   color: var(--ink-700);
   font-size: 0.95rem;
+}
+
+.gallery-card figcaption::before {
+  content: "Old Memories";
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--navy-800);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .modal {
@@ -1406,6 +1461,7 @@ blockquote cite {
   .hero-grid,
   .split-layout,
   .contact-grid,
+  .album-panel,
   .gallery-hero-inner,
   .footer-grid,
   .video-panel,

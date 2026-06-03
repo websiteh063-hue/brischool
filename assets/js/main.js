@@ -15,8 +15,17 @@ const numberedRange = (start, end, extension) =>
   Array.from({ length: end - start + 1 }, (_, index) => `${start + index}.${extension}`);
 
 const hiddenGalleryFiles = new Set([
-  "8.jpg"
+  ...numberedRange(3, 9, "jpg"),
+  "13.jpg",
+  "19.jpg",
+  "20.jpg",
+  "26.jpg",
+  "38.jpg",
+  ...numberedRange(41, 44, "jpg"),
+  "50.jpg"
 ]);
+
+const galleryAlbumName = "Old Memories";
 
 const galleryMedia = [
   ...numberedRange(1, 51, "jpg"),
@@ -30,7 +39,7 @@ const galleryMedia = [
   .map((fileName, index) => ({
   thumb: `assets/images/gallery/thumbs/${fileName}`,
   src: `assets/images/gallery/${fileName}`,
-  alt: `B.R. International School gallery image ${index + 1}`
+  alt: `${galleryAlbumName} photo ${index + 1} at B.R. International School`
 }));
 
 let activeGalleryIndex = 0;
